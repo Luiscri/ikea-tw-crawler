@@ -1,0 +1,82 @@
+version: '3'
+services:
+  crawler:
+    build:
+      context: crawler/
+      args:
+        APP_PORT: "${CRAWLER_PORT}"
+    container_name: "${CRAWLER_HOST}"
+    ports:
+      - "${CRAWLER_PORT}:${CRAWLER_PORT}"
+    restart: unless-stopped
+    environment:
+      APP_ENV: "prod"
+      APP_DEBUG: "False"
+      APP_PORT: "${CRAWLER_PORT}"
+      API_KEY: "${API_KEY}"
+      API_SECRET: "${API_SECRET}"
+      ACCESS_TOKEN: "${ACCESS_TOKEN}"
+      ACCESS_SECRET: "${ACCESS_SECRET}"
+      MONGODB_DATABASE: "${MONGODB_DATABASE}"
+      MONGODB_USERNAME: "${MONGODB_USERNAME}"
+      MONGODB_PASSWORD: "${MONGODB_PASSWORD}"
+      MONGODB_HOSTNAME: "${MONGODB_HOSTNAME}"
+      MONGODB_COLLECTION: "${MONGODB_COLLECTION}"
+      GOOGLE_CLOUD_PROJECT: "False"
+    depends_on:
+      - mongodb
+    networks:
+      - frontend
+      - backend
+
+  mongodb:
+    image: mongo:4.0.8
+    container_name: mongodb
+    restart: unless-stopped
+    command: mongod --auth
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "root"
+      MONGO_INITDB_DATABASE: "${MONGODB_DATABASE}"
+      MONGODB_USERNAME: "${MONGODB_USERNAME}"
+      MONGODB_PASSWORD: "${MONGODB_PASSWORD}"
+      MONGODB_DATA_DIR: /data/db
+      MONDODB_LOG_DIR: /dev/null
+    volumes:
+      - mongodbdata:/data/db
+      - ./mongodb/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
+    networks:
+      - backend
+
+  dashboard:
+    build:
+      context: dashboard/
+      args:
+        APP_PORT: "${DASHBOARD_PORT}"
+    container_name: "${DASHBOARD_HOST}"
+    ports:
+      - "${DASHBOARD_PORT}:${DASHBOARD_PORT}"
+    restart: unless-stopped
+    environment:
+      APP_ENV: "prod"
+      APP_DEBUG: "False"
+      APP_PORT: "${DASHBOARD_PORT}"
+      CRAWLER_BASEURL: "${CRAWLER_BASEURL}"
+    depends_on:
+      - crawler
+      - mongodb
+    volumes:
+      - ./dashboard/:/usr/src/app
+    networks:
+      - frontend
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+volumes:
+  mongodbdata:
+    driver: local

@@ -1,0 +1,7 @@
+Flask==2.0.2
+Flask-PyMongo==2.3.0
+gunicorn==20.1.0
+tweepy==4.6.0
+python-dateutil==2.8.1
+google-cloud-bigquery
+google-cloud-storage

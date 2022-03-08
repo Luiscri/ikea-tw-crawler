@@ -1,0 +1,45 @@
+.navbar {
+	background-color: #0057a4;
+	color: #ffcc00;
+	font-weight: bold;
+}
+
+nav li a {
+    color: #ffcc00 !important;
+}
+
+.active {
+	position: relative;
+}
+
+.active:before {
+	content: "";
+	height: 2px;
+	width: 100%;
+	position: absolute;
+	right: 0;
+	bottom: 0.2em;
+	background-color: #ffcc00;
+}
+
+#ikea-logo {
+	width: 50%;
+	height: auto;
+}
+
+.custom-btn {
+	min-width: 130px;
+	background-color: #0057a4 !important;
+	color: #ffcc00 !important;
+	font-weight: bold !important;
+}
+
+.card-deck {
+	max-height: 100vh;
+	overflow-y: scroll;
+}
+
+.twitter-logo {
+	width: 25%;
+	height: auto;
+}

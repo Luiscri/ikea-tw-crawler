@@ -1,0 +1,90 @@
+[
+    {
+		"name": "id",
+		"description": "Tweet id assigned by Twitter",
+		"type": "INTEGER",
+		"mode": "REQUIRED"
+	},
+	{
+		"name": "created_at",
+		"description": "UTC time when the tweet was created.",
+		"type": "DATETIME",
+		"mode": "REQUIRED"
+	},
+	{
+		"name": "text",
+		"description": "UTF-8 text of the tweet.",
+		"type": "STRING",
+		"mode": "NULLABLE"
+	},
+    {
+		"name": "lang",
+		"description": "When present, indicates a BCP 47 language identifier corresponding to the machine-detected language of the Tweet text, or und if no language could be detected.",
+		"type": "STRING",
+		"mode": "NULLABLE"
+	},
+    {
+		"name": "coordinates",
+		"description": "Represents the geographic location of the tweet as reported by the user or client application.",
+		"type": "RECORD",
+		"mode": "NULLABLE",
+        "fields": [
+            {
+                "name": "type",
+                "description": "Coordinates type.",
+                "type": "STRING",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "coordinates",
+                "description": "Array with the formatted geoJSON (longitude first, then latitude).",
+                "type": "FLOAT64",
+                "mode": "REPEATED"
+            }
+        ]
+	},
+    {
+        "name": "source",
+        "description": "Utility used to post the tweet, as an HTML-formatted string.",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "interactions",
+		"description": "User interactions with this tweet.",
+		"type": "RECORD",
+		"mode": "NULLABLE",
+        "fields": [
+            {
+                "name": "favorite_count",
+                "description": "Indicates approximately how many times this Tweet has been liked by Twitter users.",
+                "type": "INTEGER",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "retweet_count",
+                "description": "Number of times this Tweet has been retweeted.",
+                "type": "INTEGER",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "quote_count",
+                "description": "Indicates approximately how many times this Tweet has been quoted by Twitter users.",
+                "type": "INTEGER",
+                "mode": "NULLABLE"
+            },
+            {
+                "name": "reply_count",
+                "description": "Number of times this Tweet has been replied to.",
+                "type": "INTEGER",
+                "mode": "NULLABLE"
+            }
+        ]
+    },
+    {
+		"name": "crawler",
+		"description": "Indicates the crawler which gathered the tweet. The only possible values are 'streaming' or 'batch'.",
+		"type": "STRING",
+		"mode": "NULLABLE"
+	}
+]

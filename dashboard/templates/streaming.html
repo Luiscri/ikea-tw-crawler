@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% set active_page = "streaming" %}
+
+{% block title %} Streaming Process {% endblock %}
+
+{% block content %}
+    <h1>Streaming Process</h1>
+    <form id="crawl" method="post">
+        <div class="form-group text-left">
+            <label class="font-weight-bold" for="track">Track:</label>
+            <input id="track" class="form-control" type="text" name="track" value="IKEA,#IKEA" required>
+            <small class="form-text text-muted">
+                Comma-separated list of phrases which will be used to determine what Tweets will be delivered on the stream.
+                <a href="https://developer.twitter.com/en/docs/twitter-api/v1/tweets/filter-realtime/guides/basic-stream-parameters#track" target="_blank">
+                    Learn more.
+                </a>
+            </small>
+        </div>
+    </form>
+    <div class="d-flex justify-content-center">
+        <button type="submit" form="crawl" class="btn custom-btn py-2 mr-2">
+            {% if status == false %} Start <i class="fa fa-play fa-lg ml-1"></i>
+            {% else %} Stop <i class="fa fa-pause fa-lg ml-1"></i>
+            {% endif %}
+        </button>
+        <form class="ml-2">
+            <button type="submit" class="btn custom-btn py-2">
+                Refresh <i class="fa fa-refresh fa-lg ml-1"></i>
+            </button>
+        </form>
+    </div>
+    <div class="alert alert-success mt-3" role="alert">
+        Crawled tweets: {{ count }}
+    </div>
+    <div class="card-deck mb-3">
+        {% for tweet in tweets %}
+        <div class="col-12 col-sm-6 col-md-4 d-flex flex-column mb-3 mb-md-4">
+            <div class="card">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <img class="twitter-logo mb-2" alt="Twitter logo" src="{{ url_for('static', filename='img/twitter-logo.png') }}">
+                    <small class="text-muted mb-2"> {{ tweet['created_at'] }} </small>
+                    <p class="card-text"> {{ tweet['text'] }} </p>
+                </div>
+                <div class="card-footer d-flex justify-content-around">
+                    {% if 'interactions' in tweet %}
+                        {% if 'favorite_count' in tweet['interactions'] %}
+                    <div>
+                        <i class="fa fa-heart fa-lg mr-1"></i>
+                        {{ tweet['interactions']['favorite_count'] }}
+                    </div>
+                        {% endif %}
+                        {% if 'retweet_count' in tweet['interactions'] %}
+                    <div>
+                        <i class="fa fa-retweet fa-lg mr-1"></i>
+                        {{ tweet['interactions']['retweet_count'] }}
+                    </div>
+                        {% endif %}
+                        {% if 'quote_count' in tweet['interactions'] %}
+                    <div>
+                        <i class="fa fa-quote-right fa-lg mr-1"></i>
+                        {{ tweet['interactions']['quote_count'] }}
+                    </div>
+                        {% endif %}
+                        {% if 'reply_count' in tweet['interactions'] %}
+                    <div>
+                        <i class="fa fa-reply fa-lg mr-1"></i>
+                        {{ tweet['interactions']['reply_count'] }}
+                    </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

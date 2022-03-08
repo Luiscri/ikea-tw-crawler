@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% set active_page = "index" %}
+
+{% block title %} IKEA Dashboard {% endblock %}
+
+{% block content %}
+    <h1>Welcome to IKEA Dashboard!</h1>
+    <img id="ikea-logo" class="mb-2" alt="IKEA logo" src="{{ url_for('static', filename='img/ikea-logo.jpg') }}">
+    <div>
+        This project has been developed to understand what people are talking about IKEA on social media.
+        Specifically, documents have been collected from the social network Twitter, and stored in a
+        database for later consumption. This dashboard allows to control the execution of the different ETL
+        processes, as well as to see the stored documents.</div>
+{% endblock %}

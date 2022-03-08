@@ -1,0 +1,15 @@
+runtime: python37
+service: crawler
+automatic_scaling:
+  max_instances: 1
+env_variables:
+  APP_ENV: "prod"
+  APP_DEBUG: "False"
+  APP_PORT: "8080"
+  BUCKETNAME: "ikea-interview-files"
+  TABLENAME: "tweets"
+  DATASET: "social_data"
+  API_KEY: "Dwxt2C9SnxDW54CxDKHJHyr13"
+  API_SECRET: "qWlml1wwwEa4liMp7hXfxKsmu3Zg7xSQIQAUOJLvyoK3sr5SkZ"
+  ACCESS_TOKEN: "1481235578276487170-ct4kURYGudmtI4baDiOPdg6ZD1AuVE"
+  ACCESS_SECRET: "NVXpfkG9gP64beIRBKBvXQpwC2BL7QQr75z4SunBafueB"
